@@ -1,6 +1,6 @@
 {
   "name": "@mule-app/widget-providers",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Mule widget provider classes",
   "repository": {
     "type": "git",

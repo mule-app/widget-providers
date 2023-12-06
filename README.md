@@ -26,7 +26,7 @@ Implementing the **`CartProvider`** for a new platform involves creating a new c
     - Define a class that extends **`CartProvider`**.
     - Example:
         
-        ```tsx
+        ```ts
         typescriptCopy code
         import { Cart, CartProvider, CartItem } from 'cart';
         
@@ -46,7 +46,7 @@ Implementing the **`CartProvider`** for a new platform involves creating a new c
     - This method should fetch the cart details from your platform's API.
     - Example:
         
-        ```tsx
+        ```ts
         async getCart(): Promise<Cart> {
           // Replace with your platform's API endpoint
           const response = await fetch('/your-platform-cart-endpoint');
@@ -63,7 +63,7 @@ Implementing the **`CartProvider`** for a new platform involves creating a new c
     - This method adds a protection item to the cart.
     - Example:
         
-        ```tsx
+        ```ts
         async addProtectionItem(variantId: string, { attributes = null }: { attributes: any }): Promise<void> {
           // Implement your platform's logic to add a protection item
           // You might need to first fetch the current cart, modify it, and then update the cart
@@ -74,13 +74,22 @@ Implementing the **`CartProvider`** for a new platform involves creating a new c
     - This method removes a protection item from the cart.
     - Example:
         
-        ```tsx
+        ```ts
         async removeProtectionItem({ attributes = null }: { attributes: any }): Promise<void> {
           // Implement your platform's logic to remove a protection item
           // Similar to addProtectionItem, fetch the cart, modify it, and update
         }
         ```
         
+4. **`getProtectionItems` Method**
+    - Implement the logic to filter protection items from the provided cart.
+    - Example
+        
+        ```ts
+        async getProtectionItems(cart: Cart): Promise<CartItem[]> {
+          return cart.items.filter((item: CartItem) => /order/i.test(item.handle!) && /protect/i.test(item.handle!));
+        }
+        ```
 
 ### **Step 3: Define Platform-Specific Logic**
 
@@ -98,7 +107,7 @@ Implementing the **`CartProvider`** for a new platform involves creating a new c
     - Surround your API calls with **`try-catch`** blocks to handle errors.
     - Example:
         
-        ```tsx
+        ```ts
         async getCart(): Promise<Cart> {
           try {
             const response = await fetch('/your-platform-cart-endpoint');
@@ -124,7 +133,7 @@ When extending the functionality of our application to a new e-commerce platform
     - Define a class that extends **`ProductProvider`**.
     - Example:
         
-        ```tsx
+        ```ts
         export default class YourPlatformProductProvider extends ProductProvider {
           constructor() {
             super('YourPlatformName');
@@ -140,7 +149,7 @@ When extending the functionality of our application to a new e-commerce platform
     - Implement **`getProtectionVariants()`** to interact with your platform's product API.
     - Example:
         
-        ```tsx
+        ```ts
         async getProtectionVariants(): Promise<Array<Product>> {
           // Replace with your platform's API endpoint
           const response = await fetch('/your-platform-product-endpoint');
@@ -169,7 +178,7 @@ When extending the functionality of our application to a new e-commerce platform
     - Use **`try-catch`** blocks to manage errors during API interactions.
     - Example:
         
-        ```tsx
+        ```ts
         typescriptCopy code
         async getProtectionVariants(): Promise<Array<Product>> {
           try {

@@ -10,6 +10,8 @@ export abstract class CartProvider {
 
   abstract removeProtectionItem({ attributes = null } : { attributes: any }) : Promise<void>;
 
+  abstract getProtectionItems(cart: Cart): Promise<Array<CartItem>>;
+
   getPlatform() : string {
     return this.platform;
   }

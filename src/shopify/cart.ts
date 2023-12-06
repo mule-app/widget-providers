@@ -1,6 +1,10 @@
 import { Cart, CartProvider, CartItem } from 'cart';
 
 export default class ShopifyCartProvider extends CartProvider {
+  async getProtectionItems(cart: Cart): Promise<CartItem[]> {
+    return cart.items.filter((i: CartItem) => /order/i.test(i.handle!) && /protect/i.test(i.handle!));
+  }
+
   async getCart() : Promise<Cart> {
     try {
       const response = await fetch('/cart.js?provider=mule', {

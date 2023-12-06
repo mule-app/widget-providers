@@ -1,3 +1,8 @@
+export interface Product {
+  id: string,
+  price: number
+}
+
 export abstract class ProductProvider {
   platform: string;
   constructor(platform: string) {
@@ -5,9 +10,4 @@ export abstract class ProductProvider {
   }
 
   abstract getProtectionVariants() : Promise<Array<Product>>;
-}
-
-export interface Product {
-  id: string,
-  price: number
 }

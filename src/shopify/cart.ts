@@ -1,4 +1,7 @@
 import { Cart, CartProvider, CartItem } from 'cart';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const debug = require('debug')('Shopify:CartProvider');
+
 
 export default class ShopifyCartProvider extends CartProvider {
   async getProtectionItems(cart: Cart): Promise<CartItem[]> {
@@ -12,11 +15,11 @@ export default class ShopifyCartProvider extends CartProvider {
           'Content-Type': 'application/json'
         }
       });
-  
+
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-  
+
       const res = await response.json();
       return {
         totalPrice: res.total_price,
@@ -36,14 +39,14 @@ export default class ShopifyCartProvider extends CartProvider {
           taxable: i.taxable,
           title: i.title
         } as CartItem))
-      }
+      };
     } catch (error) {
-      console.error('Could not fetch cart!', error);
+      debug('Could not fetch cart! %o', error);
 
       throw error;
     }
   }
-  
+
   async addProtectionItem(variantId: string, { attributes = null } : { attributes: any }) : Promise<void> {
     const cart: Cart = await this.getCart();
 

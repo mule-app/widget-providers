@@ -1,20 +1,13 @@
-export abstract class CartProvider {
-  platform: string;
-  constructor(platform: string) {
-    this.platform = platform;
-  }
-
-  abstract getCart() : Promise<Cart>;
-  
-  abstract addProtectionItem(variantId: string, { attributes = null } : { attributes: any }) : Promise<void>;
-
-  abstract removeProtectionItem({ attributes = null } : { attributes: any }) : Promise<void>;
-
-  abstract getProtectionItems(cart: Cart): Promise<Array<CartItem>>;
-
-  getPlatform() : string {
-    return this.platform;
-  }
+export interface CartItem {
+  id: string;
+  price: number;
+  quantity?: number;
+  title?: string;
+  linePrice?: number;
+  sku?: string;
+  taxable?: boolean;
+  handle?: string;
+  requiresShipping?: boolean;
 }
 
 export interface Cart {
@@ -27,14 +20,21 @@ export interface Cart {
   items: [CartItem];
 }
 
-export interface CartItem {
-  id: string;
-  price: number;
-  quantity?: number;
-  title?: string;
-  linePrice?: number;
-  sku?: string;
-  taxable?: boolean;
-  handle?: string;
-  requiresShipping?: boolean;
+export abstract class CartProvider {
+  platform: string;
+  constructor(platform: string) {
+    this.platform = platform;
+  }
+
+  abstract getCart() : Promise<Cart>;
+
+  abstract addProtectionItem(variantId: string, { attributes } : { attributes: any }) : Promise<void>;
+
+  abstract removeProtectionItem({ attributes } : { attributes: any }) : Promise<void>;
+
+  abstract getProtectionItems(cart: Cart): Promise<Array<CartItem>>;
+
+  getPlatform() : string {
+    return this.platform;
+  }
 }

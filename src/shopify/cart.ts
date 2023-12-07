@@ -3,7 +3,7 @@ import { Cart, CartProvider, CartItem } from 'cart';
 const debug = require('debug')('Shopify:CartProvider');
 
 
-export default class ShopifyCartProvider extends CartProvider {
+export class ShopifyCartProvider extends CartProvider {
   async getProtectionItems(cart: Cart): Promise<CartItem[]> {
     return cart.items.filter((i: CartItem) => /order/i.test(i.handle!) && /protect/i.test(i.handle!));
   }

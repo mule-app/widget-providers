@@ -3,7 +3,7 @@ import { Product, ProductProvider } from 'product';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const debug = require('debug')('Shopify:ProductProvider');
 
-export default class ShopifyProductProvider extends ProductProvider {
+export class ShopifyProductProvider extends ProductProvider {
   async getProtectionVariants() : Promise<Array<Product>> {
     try {
       // Configuring the fetch request

@@ -1,6 +1,6 @@
 {
   "name": "@mule-app/widget-providers",
-  "version": "1.1.6",
+  "version": "1.1.7",
   "description": "Mule widget provider classes",
   "repository": {
     "type": "git",
@@ -8,16 +8,6 @@
   },
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
-  "exports": {
-    ".": {
-      "default": "lib/index.js",
-      "types": "lib/index.d.ts"
-    },
-    "./shopify": {
-      "default": "lib/shopify/index.js",
-      "types": "lib/shopify/index.d.ts"
-    }
-  },
   "files": [
     "lib"
   ],

@@ -13,7 +13,7 @@
     "outDir": "lib",
     "module": "commonjs",
     "moduleResolution": "node",
-    "sourceMap": true,
+    "sourceMap": false,
     "lib": [
       "es2015",
       "dom"

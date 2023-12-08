@@ -1,4 +1,4 @@
-import { Cart, CartProvider, CartItem } from 'cart';
+import { Cart, CartProvider, CartItem } from '../cart';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const debug = require('debug')('Shopify:CartProvider');
 

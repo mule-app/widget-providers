@@ -1,4 +1,4 @@
-import { Product, ProductProvider } from 'product';
+import { Product, ProductProvider } from '../product';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const debug = require('debug')('Shopify:ProductProvider');

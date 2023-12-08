@@ -47,7 +47,7 @@ export class ShopifyCartProvider extends CartProvider {
     }
   }
 
-  async addProtectionItem(variantId: string, { attributes = null } : { attributes: any }) : Promise<void> {
+  async addProtectionItem(variantId: string, { attributes = {} } : { attributes?: any } = {}) : Promise<void> {
     const cart: Cart = await this.getCart();
 
     // Filter out the items that match the criteria ('order' and 'protect' in their handle).
@@ -85,7 +85,7 @@ export class ShopifyCartProvider extends CartProvider {
     return response.json();
   }
 
-  async removeProtectionItem({ attributes = null } : { attributes: any }) : Promise<void> {
+  async removeProtectionItem({ attributes = {} } : { attributes?: any } = {}) : Promise<void> {
     const cart: Cart = await this.getCart();
 
     // Filter out the items that match the criteria ('order' and 'protect' in their handle).

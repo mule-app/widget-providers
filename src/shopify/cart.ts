@@ -4,6 +4,23 @@ const debug = require('debug')('Shopify:CartProvider');
 
 
 export class ShopifyCartProvider extends CartProvider {
+  async setAttributes(attributes: { attributes?: any } = {}): Promise<void> {
+    const response = await fetch('/cart/update.js?provider=mule', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ attributes })
+    });
+
+    // Check if the response is not OK (status code not in the range 200-299).
+    if (!response.ok) {
+      // Throw an error with the status code to indicate the failure.
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    // Parse the JSON response.
+    return response.json();
+  }
+
   async getProtectionItems(cart: Cart): Promise<CartItem[]> {
     return cart.items.filter((i: CartItem) => /order/i.test(i.handle!) && /protect/i.test(i.handle!));
   }

@@ -108,11 +108,6 @@ export class ShopifyCartProvider extends CartProvider {
     // Filter out the items that match the criteria ('order' and 'protect' in their handle).
     const items = cart.items.filter((i: CartItem) => /order/i.test(i.handle!) && /protect/i.test(i.handle!));
 
-    // If there are no items to remove, exit the function early.
-    if (!items.length) {
-      return;
-    }
-
     // Prepare the body of the request by setting the quantity of the selected items to 0.
     const body = JSON.stringify({
       // Remove all the protection variants from the cart

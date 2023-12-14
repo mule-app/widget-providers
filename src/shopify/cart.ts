@@ -54,7 +54,8 @@ export class ShopifyCartProvider extends CartProvider {
           requiresShipping: i.requires_shipping,
           sku: i.sku,
           taxable: i.taxable,
-          title: i.title
+          title: i.title,
+          productTitle: i.product_title
         } as CartItem))
       };
     } catch (error) {

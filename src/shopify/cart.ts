@@ -81,7 +81,7 @@ export class ShopifyCartProvider extends CartProvider {
         }, {}),
 
         // Add the new protection variant
-        [variantId]: 1
+        [variantId]: cart.items.length > items.length ? 1 : 0
       },
       attributes
     });

@@ -5,9 +5,11 @@ const debug = require('debug')('Shopify:ProductProvider');
 
 export class ShopifyProductProvider extends ProductProvider {
   async getProtectionVariants() : Promise<Array<Product>> {
+    const productHandle = this.protection?.handle ?? 'protectmyorder';
+
     try {
       // Configuring the fetch request
-      const response = await fetch('/products/protectmyorder.js?provider=mule', {
+      const response = await fetch(`/products/${productHandle}.js?provider=mule`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json'

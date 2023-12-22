@@ -1,7 +1,7 @@
 import Debug from 'debug';
 import { Cart, CartProvider, CartItem } from '../cart';
 
-const debug = Debug('Shopify:CartProvider');
+const debug = Debug('MuleWidget:Shopify:CartProvider');
 
 export class ShopifyCartProvider extends CartProvider {
   async setAttributes(attributes: { attributes?: any } = {}): Promise<void> {

@@ -1,6 +1,6 @@
 {
   "name": "@mule-app/widget-providers",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Mule widget provider classes",
   "repository": {
     "type": "git",
@@ -22,7 +22,7 @@
     "debug": "^4.3.4"
   },
   "devDependencies": {
-    "@types/debug": "^4.1.7",
+    "@types/debug": "^4.1.12",
     "@types/jest": "^27.5.1",
     "@types/node": "^17.0.36",
     "eslint-config-mule": "^0.0.5",

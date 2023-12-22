@@ -1,13 +1,16 @@
 import { Product, ProductProvider } from '../product';
+import Debug from 'debug';
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const debug = require('debug')('Shopify:ProductProvider');
+const debug = Debug('Shopify:ProductProvider');
 
 export class ShopifyProductProvider extends ProductProvider {
   async getProtectionVariants() : Promise<Array<Product>> {
     const productHandle = this.protection?.handle ?? 'protectmyorder';
+    const logger = debug.extend('getProtectionVariants');
 
     try {
+      logger(`Sending request to: /products/${productHandle}.js?provider=mule`);
+
       // Configuring the fetch request
       const response = await fetch(`/products/${productHandle}.js?provider=mule`, {
         method: 'GET',
@@ -23,11 +26,12 @@ export class ShopifyProductProvider extends ProductProvider {
 
       // Parsing and returning the JSON response
       const product = await response.json();
+      logger('Response: %o', product);
 
       return product.variants.map((i: any) => ({ id: i.id, price: i.price } as Product));
     } catch (error) {
       // Handle any errors
-      debug('There was an error getting protection variants! %o', error);
+      logger('There was an error getting protection variants! %o', error);
       // You might want to re-throw the error or handle it appropriately
       throw error;
     }

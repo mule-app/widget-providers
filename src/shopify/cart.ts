@@ -1,10 +1,13 @@
+import Debug from 'debug';
 import { Cart, CartProvider, CartItem } from '../cart';
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const debug = require('debug')('Shopify:CartProvider');
 
+const debug = Debug('Shopify:CartProvider');
 
 export class ShopifyCartProvider extends CartProvider {
   async setAttributes(attributes: { attributes?: any } = {}): Promise<void> {
+    const logger = debug.extend('setAttributes');
+
+    logger('POST: /cart/update.js?provider=mule, body: %o', { attributes });
     const response = await fetch('/cart/update.js?provider=mule', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -18,7 +21,10 @@ export class ShopifyCartProvider extends CartProvider {
     }
 
     // Parse the JSON response.
-    return response.json();
+    const res = await response.json();
+    logger('Response: %o', res);
+
+    return res;
   }
 
   async getProtectionItems(cart: Cart): Promise<CartItem[]> {
@@ -26,7 +32,10 @@ export class ShopifyCartProvider extends CartProvider {
   }
 
   async getCart() : Promise<Cart> {
+    const logger = debug.extend('getCart');
+
     try {
+      logger('GET: /cart.js?provider=mule');
       const response = await fetch('/cart.js?provider=mule', {
         headers: {
           'Content-Type': 'application/json'
@@ -38,7 +47,7 @@ export class ShopifyCartProvider extends CartProvider {
       }
 
       const res = await response.json();
-      return {
+      const cart = {
         totalPrice: res.total_price,
         currency: res.currency,
         itemCount: res.item_count,
@@ -58,18 +67,26 @@ export class ShopifyCartProvider extends CartProvider {
           productTitle: i.product_title
         } as CartItem))
       };
+
+      logger('Cart: %o', cart);
+      return cart;
     } catch (error) {
-      debug('Could not fetch cart! %o', error);
+      logger('Could not fetch cart! %o', error);
 
       throw error;
     }
   }
 
   async addProtectionItem(variantId: string, { attributes = {} } : { attributes?: any } = {}) : Promise<void> {
+    const logger = debug.extend('addProtectionItem');
+    logger('Input: %o', { variantId, attributes });
+
     const cart: Cart = await this.getCart();
+    logger('Cart: %o', cart);
 
     // Filter out the items that match the criteria ('order' and 'protect' in their handle).
     const items = cart.items.filter((i: CartItem) => /order/i.test(i.handle!) && /protect/i.test(i.handle!));
+    logger('ProtectionItems: %o', items);
 
     // Prepare the body of the request by setting the quantity of the selected items to 0.
     const body = JSON.stringify({
@@ -86,6 +103,7 @@ export class ShopifyCartProvider extends CartProvider {
       attributes
     });
 
+    logger('POST: /cart/update.js?provider=mule, body: %o', body);
     // Perform the fetch request to update the cart.
     const response = await fetch('/cart/update.js?provider=mule', {
       method: 'POST',
@@ -100,14 +118,22 @@ export class ShopifyCartProvider extends CartProvider {
     }
 
     // Parse the JSON response.
-    return response.json();
+    const res = await response.json();
+    logger('Response: %o', res);
+
+    return res;
   }
 
   async removeProtectionItem({ attributes = {} } : { attributes?: any } = {}) : Promise<void> {
+    const logger = debug.extend('addProtectionItem');
+    logger('Input: %o', { attributes });
+
     const cart: Cart = await this.getCart();
+    logger('Cart: %o', cart);
 
     // Filter out the items that match the criteria ('order' and 'protect' in their handle).
     const items = cart.items.filter((i: CartItem) => /order/i.test(i.handle!) && /protect/i.test(i.handle!));
+    logger('ProtectionItems: %o', items);
 
     // Prepare the body of the request by setting the quantity of the selected items to 0.
     const body = JSON.stringify({
@@ -119,6 +145,7 @@ export class ShopifyCartProvider extends CartProvider {
       attributes
     });
 
+    logger('POST: /cart/update.js?provider=mule, body: %o', body);
     // Perform the fetch request to update the cart.
     const response = await fetch('/cart/update.js?provider=mule', {
       method: 'POST',
@@ -133,6 +160,9 @@ export class ShopifyCartProvider extends CartProvider {
     }
 
     // Parse the JSON response.
-    return response.json();
+    const res = await response.json();
+    logger('Response: %o', res);
+
+    return res;
   }
 }

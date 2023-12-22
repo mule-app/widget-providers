@@ -1,7 +1,7 @@
 import { Product, ProductProvider } from '../product';
 import Debug from 'debug';
 
-const debug = Debug('Shopify:ProductProvider');
+const debug = Debug('MuleWidget:Shopify:ProductProvider');
 
 export class ShopifyProductProvider extends ProductProvider {
   async getProtectionVariants() : Promise<Array<Product>> {
